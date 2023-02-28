@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class task {
+    private int taskid;
     private String task;
     private int priority;
     private String status;
@@ -32,8 +33,17 @@ public class task {
         this.status = status;
     }
 
-    public task(String task, int priority, String status) {
+    public int getTaskid() {
+        return taskid;
+    }
+
+    public void setTaskid(int taskid) {
+        this.taskid = taskid;
+    }
+
+    public task( int taskid,String task, int priority, String status) {
         this.task = task;
+        this.taskid = taskid;
         this.priority = priority;
         this.status = status;
     }
@@ -41,7 +51,8 @@ public class task {
     @Override
     public String toString() {
         return "task{" +
-                "task='" + task + '\'' +
+                "taskid='" + taskid + '\'' +
+                ", task=" + task +
                 ", priority=" + priority +
                 ", status='" + status + '\'' +
                 '}';

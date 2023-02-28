@@ -18,10 +18,10 @@ public class homeControllar {
         return this.taskservice.getalltask();
     }
 
-    @GetMapping("/priority/{id}")
+    @GetMapping("/getbyid/{id}")
     public task getPriority(@PathVariable("id") int Pid)
     {
-        return this.taskservice.getTaskByPriority(Pid);
+        return this.taskservice.getTaskById(Pid);
     }
 
     @PostMapping("/add")

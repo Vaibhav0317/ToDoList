@@ -13,8 +13,8 @@ public class taskService {
    static private List<task> list=new ArrayList<task>();
 
     static {
-        list.add(new task("creating api project",1,"inprogress"));
-        list.add(new task("Learning springboot",2,"almost completed"));
+        list.add(new task(1,"Learning springboot",1,"Inprogress"));
+        list.add(new task(2,"Learning mongo",3,"pending"));
     }
 
 
@@ -23,10 +23,10 @@ public class taskService {
         return list;
     }
 
-    public task getTaskByPriority(int priority)
+    public task getTaskById(int id)
     {
         task t=null;
-        t=list.stream().filter(e->e.getPriority()==priority).findFirst().get();
+        t=list.stream().filter(e->e.getTaskid()==id).findFirst().get();
         return t;
     }
 
