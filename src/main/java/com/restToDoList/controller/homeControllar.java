@@ -19,7 +19,7 @@ public class homeControllar {
     }
 
     @GetMapping("/getbyid/{id}")
-    public task getPriority(@PathVariable("id") int Pid)
+    public task getById(@PathVariable("id") int Pid)
     {
         return this.taskservice.getTaskById(Pid);
     }
