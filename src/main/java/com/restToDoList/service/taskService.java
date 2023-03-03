@@ -32,23 +32,34 @@ public class taskService {
     public task getTaskById(int id)
     {
         task t=null;
-        t=list.stream().filter(e->e.getTaskid()==id).findFirst().get();
+        try {
+            t = list.stream().filter(e -> e.getTaskid() == id).findFirst().get();
+        }catch (Exception e){
+         e.printStackTrace();
+        }
         return t;
     }
 
-    public task addTask(task t)
+    public boolean addTask(task t)
     {
-        list.add(t);
-        return t;
+        boolean isPresent=isContains(t.getTaskid());
+       // System.out.println("list flag >=="+isPresent);
+        if(isPresent==false) {
+       //     System.out.println("list element add >=="+t);
+            list.add(t);
+        }
+        return isPresent;
     }
 
-    public void deleteTask(int id)
+    public boolean deleteTask(int id)
     {
-       list= list.stream().filter(task -> task.getTaskid()!=id).collect(Collectors.toList());
-
-
-
+        boolean isPresent=isContains(id);
+        System.out.println("delete id "+isPresent);
+        if(isPresent==true) {
+            list = list.stream().filter(task -> task.getTaskid() != id).collect(Collectors.toList());
+        }
         //System.out.println("list after delete>==="+list);
+        return isPresent;
     }
 
 
@@ -56,6 +67,85 @@ public class taskService {
     {
         list.clear();
     }
+
+
+    public int update(task t,int id)
+    {
+        int i=0;
+        boolean isPresent=isContains(id);
+        if(isPresent==true)
+        {
+            boolean Temp=isContains(t.getTaskid());
+            if (t.getTaskid()==id) {
+            i=1;
+            System.out.println("task update with same id");
+            list= list.stream().map(e->{
+                if(e.getTaskid()==id)
+                {
+                    e.setTask(t.getTask());
+                    e.setPriority(t.getPriority());
+                    e.setStatus(t.getStatus());
+                }
+                return e;
+            }).collect(Collectors.toList());
+        }
+            else if(Temp==true)
+            {
+                System.out.println("task is already present please use different task id");
+                i=2;
+            }
+            else {
+                i=3;
+                System.out.println("task update");
+                list= list.stream().map(e->{
+                    if(e.getTaskid()==id)
+                    {
+                        e.setTaskid(t.getTaskid());
+                        e.setTask(t.getTask());
+                        e.setPriority(t.getPriority());
+                        e.setStatus(t.getStatus());
+                    }
+                    return e;
+                }).collect(Collectors.toList());
+            }
+        }
+        else {
+            System.out.println("task id is not present");
+        }
+     return i;
+
+
+//        list= list.stream().map(e->{
+//            if(e.getTaskid()==id)
+//            {
+//               e.setTask(t.getTask());
+//               e.setPriority(t.getPriority());
+//               e.setStatus(t.getStatus());
+//            }
+//            return e;
+//        }).collect(Collectors.toList());
+    }
+
+
+    public boolean isContains(int id)
+    {
+        boolean isPresent=false;
+        for(int i=0;i<list.size();i++)
+        {
+            if(list.get(i).getTaskid()==id)
+            {
+                isPresent=true;
+                break;
+            }
+            else{
+                isPresent=false;
+            }
+        }
+        return isPresent;
+    }
+
+
+
 
 
 }
