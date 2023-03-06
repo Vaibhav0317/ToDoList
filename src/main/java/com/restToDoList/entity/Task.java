@@ -1,7 +1,6 @@
 package com.restToDoList.entity;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 @Data
 @AllArgsConstructor
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @ToString
-public class task {
+public class Task {
     private int taskid;
     private String task;
     private int priority;

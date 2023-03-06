@@ -1,7 +1,7 @@
 package com.restToDoList.controller;
 
-import com.restToDoList.entity.task;
-import com.restToDoList.service.taskService;
+import com.restToDoList.entity.Task;
+import com.restToDoList.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class homeControllar {
+public class HomeControllar {
 
     @Autowired
-    private taskService taskservice;
+    private TaskService taskservice;
     @GetMapping("/getall")
     public ResponseEntity<?> getAllList()
     {
         String MsgFalse = "There are no Task in your List";
         HttpStatus statusNotOk = HttpStatus.NOT_FOUND;
-        List<task> list=this.taskservice.getalltask();
+        List<Task> list=this.taskservice.getalltask();
         if(list.size()<=0)
         {
             //return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -38,7 +38,7 @@ public class homeControllar {
 
 
            try {
-               task t=null;
+               Task t=null;
                t = this.taskservice.getTaskById(Pid);
                if (t == null) {
                    return new ResponseEntity<>(MsgFalse, statusNotOk);
@@ -56,8 +56,10 @@ public class homeControllar {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addTask(@RequestBody task t)
+    public ResponseEntity<?> addTask(@RequestBody Task t)
     {
+//        boolean temp=isDataType(t);
+//        System.out.println("valid task element  "+temp);
         String MsgTrue = "Task Added Successfully";
         String MsgFalse = "Task Id already present please use different task id";
         HttpStatus statusOk = HttpStatus.OK;
@@ -107,7 +109,7 @@ public class homeControllar {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@RequestBody task t,@PathVariable ("id") int id)
+    public ResponseEntity<?> update(@RequestBody Task t, @PathVariable ("id") int id)
     {
        int i= this.taskservice.update(t,id);
        //if id not present i=0
@@ -128,5 +130,41 @@ public class homeControllar {
         }
         return new ResponseEntity<>(str1,HttpStatus.NOT_FOUND);
     }
+
+    public boolean isDataType(Task t)
+    {
+        Object Obj1=t.getTaskid();
+        Object Obj2=t.getTask();
+        Object Obj3=t.getPriority();
+        Object Obj4=t.getStatus();
+
+//        System.out.println("id "+isInteger(Obj1));
+//        System.out.println("pr "+isInteger(Obj3));
+//        System.out.println("Obj2 "+isString(Obj2));
+//        System.out.println("Obj3 "+isString(Obj4));
+
+        if(isInteger(Obj1) && isString(Obj2) && isInteger(Obj3) && isString(Obj4)){
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean isString(Object obj){
+       if(obj instanceof String)
+       {
+           return true;
+       }
+       return false;
+    }
+    public boolean isInteger(Object obj){
+        if(obj instanceof Integer)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
 
 }
