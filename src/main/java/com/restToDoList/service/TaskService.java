@@ -45,7 +45,8 @@ public class TaskService {
     public boolean addTask(Task t) {
         boolean isPresent = isContains(t.getTaskid());
         // System.out.println("list flag >=="+isPresent);
-        if (isPresent == false) {
+        if (isPresent == false)
+        {
             //     System.out.println("list element add >=="+t);
             list.add(t);
         }
@@ -55,7 +56,8 @@ public class TaskService {
     public boolean deleteTask(int id) {
         boolean isPresent = isContains(id);
         System.out.println("delete id " + isPresent);
-        if (isPresent == true) {
+        if (isPresent == true)
+        {
             list = list.stream().filter(Task -> Task.getTaskid() != id).collect(Collectors.toList());
         }
         //System.out.println("list after delete>==="+list);
@@ -73,7 +75,8 @@ public class TaskService {
         boolean isPresent = isContains(id);
         if (isPresent == true) {
             boolean Temp = isContains(t.getTaskid());
-            if (t.getTaskid() == id) {
+            if (t.getTaskid() == id)
+            {
                 i = 1;
                 System.out.println("task update with same id");
                 list = list.stream().map(e -> {
@@ -84,10 +87,13 @@ public class TaskService {
                     }
                     return e;
                 }).collect(Collectors.toList());
-            } else if (Temp == true) {
+            } else if (Temp == true)
+            {
                 System.out.println("task is already present please use different task id");
                 i = 2;
-            } else {
+            }
+            else
+            {
                 i = 3;
                 System.out.println("task update");
                 list = list.stream().map(e -> {
@@ -100,7 +106,9 @@ public class TaskService {
                     return e;
                 }).collect(Collectors.toList());
             }
-        } else {
+        }
+        else
+        {
             System.out.println("task id is not present");
         }
         return i;
